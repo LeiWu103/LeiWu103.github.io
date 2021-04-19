@@ -168,7 +168,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -206,6 +206,120 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/19/NSGA-II%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lei Wu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/04/19/NSGA-II%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="post-title-link" itemprop="url">NSGA-II论文阅读</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-19 22:54:57" itemprop="dateCreated datePublished" datetime="2021-04-19T22:54:57+08:00">2021-04-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-20 00:28:16" itemprop="dateModified" datetime="2021-04-20T00:28:16+08:00">2021-04-20</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>564</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="A-fast-and-elitist-multiobjective-genetic-algorithm-NSGA-II论文阅读记录"><a href="#A-fast-and-elitist-multiobjective-genetic-algorithm-NSGA-II论文阅读记录" class="headerlink" title="A fast and elitist multiobjective genetic algorithm: NSGA-II论文阅读记录"></a>A fast and elitist multiobjective genetic algorithm: NSGA-II论文阅读记录</h1><p>论文pdf地址：<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/996017">https://ieeexplore.ieee.org/document/996017</a></p>
+<p>发表时间：2002年</p>
+<p>这篇论文写的十分详细，很适合博主这样的科研小白阅读，但是要有一点耐心（毕竟太长了😂）。算法的核心部分给出了伪代码，对理解算法思路很重要。</p>
+<h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><h3 id="现状"><a href="#现状" class="headerlink" title="现状"></a>现状</h3><p>多目标进化算法采用的非支配排序方法有三个缺点：</p>
+<ol>
+<li>时间复杂度高（O(MN^3)）</li>
+<li>使用的是非精英主义方法</li>
+<li>需要明确共享参数</li>
+</ol>
+<h3 id="提出NSGA-II"><a href="#提出NSGA-II" class="headerlink" title="提出NSGA-II"></a>提出NSGA-II</h3><p>减轻了上述的三个问题：</p>
+<ol>
+<li>提出了一个O(MN^2)的非支配排序方法</li>
+<li>结合亲代和子代创建匹配池来选择最优解</li>
+<li></li>
+</ol>
+<h2 id="二、NSGA-II核心内容"><a href="#二、NSGA-II核心内容" class="headerlink" title="二、NSGA-II核心内容"></a>二、NSGA-II核心内容</h2><h3 id="一个快速非支配排序方法"><a href="#一个快速非支配排序方法" class="headerlink" title="一个快速非支配排序方法"></a>一个快速非支配排序方法</h3><p>需要求解的参数：</p>
+<ol>
+<li></li>
+<li><p>支配解p的其他解的个数<br>$$<br>n_p<br>$$</p>
+</li>
+<li><p>解p支配的解集合<br>$$<br>S_p<br>$$</p>
+</li>
+<li></li>
+</ol>
+<p>伪代码：</p>
+<img src="https://i.bmp.ovh/imgs/2021/04/589fd77a4e3eaf4f.png" style="zoom:50%;" />
+
+<p>首先，遍历解集合中的所有解，并分别计算这些解对应的n值和S集合，对于n=0的解，表示该解为非支配解，划入F(1)中；接着，访问当前Frank(i)中每个Pareto最优解对应S集合中的解，当解被访问则n值减一，每完整遍历一次前沿面的序号rank增大1，其中若有解n值为0，则保存至下一前沿面Frank(i+1)中；重复上一步骤，直到所有解都划分到对应的前沿面中。</p>
+<h3 id="拥挤比较"><a href="#拥挤比较" class="headerlink" title="拥挤比较"></a>拥挤比较</h3>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -506,7 +620,7 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Symbols count total: </span>
-    <span title="Symbols count total">0k</span>
+    <span title="Symbols count total">1k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
