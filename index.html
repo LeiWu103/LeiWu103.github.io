@@ -246,7 +246,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-20 00:28:16" itemprop="dateModified" datetime="2021-04-20T00:28:16+08:00">2021-04-20</time>
+        <time title="Modified: 2021-04-20 14:18:16" itemprop="dateModified" datetime="2021-04-20T14:18:16+08:00">2021-04-20</time>
       </span>
 
   
@@ -257,7 +257,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>564</span>
+      <span>981</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -287,23 +287,25 @@
 <h3 id="提出NSGA-II"><a href="#提出NSGA-II" class="headerlink" title="提出NSGA-II"></a>提出NSGA-II</h3><p>减轻了上述的三个问题：</p>
 <ol>
 <li>提出了一个O(MN^2)的非支配排序方法</li>
-<li>结合亲代和子代创建匹配池来选择最优解</li>
+<li>结合亲代和子代创建匹配池来选择最优解（精英保留策略）</li>
 <li></li>
 </ol>
 <h2 id="二、NSGA-II核心内容"><a href="#二、NSGA-II核心内容" class="headerlink" title="二、NSGA-II核心内容"></a>二、NSGA-II核心内容</h2><h3 id="一个快速非支配排序方法"><a href="#一个快速非支配排序方法" class="headerlink" title="一个快速非支配排序方法"></a>一个快速非支配排序方法</h3><p>需要求解的参数：</p>
-<ol>
-<li></li>
-<li><p>支配解p的其他解的个数<br>$$<br>n_p<br>$$</p>
-</li>
-<li><p>解p支配的解集合<br>$$<br>S_p<br>$$</p>
-</li>
-<li></li>
+<ol start="2">
+<li>支配解p的其他解的个数<br>$$<br>n_p<br>$$</li>
+<li>解p支配的解集合<br>$$<br>S_p<br>$$</li>
 </ol>
+<p>Pareto支配关系和Pareto等级：</p>
+<p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/haha0332/article/details/88634378">https://blog.csdn.net/haha0332/article/details/88634378</a></p>
+<p><img src="https://i.bmp.ovh/imgs/2021/04/4ecc37232fb3c052.png"></p>
 <p>伪代码：</p>
 <img src="https://i.bmp.ovh/imgs/2021/04/589fd77a4e3eaf4f.png" style="zoom:50%;" />
 
 <p>首先，遍历解集合中的所有解，并分别计算这些解对应的n值和S集合，对于n=0的解，表示该解为非支配解，划入F(1)中；接着，访问当前Frank(i)中每个Pareto最优解对应S集合中的解，当解被访问则n值减一，每完整遍历一次前沿面的序号rank增大1，其中若有解n值为0，则保存至下一前沿面Frank(i+1)中；重复上一步骤，直到所有解都划分到对应的前沿面中。</p>
-<h3 id="拥挤比较"><a href="#拥挤比较" class="headerlink" title="拥挤比较"></a>拥挤比较</h3>
+<h3 id="拥挤比较"><a href="#拥挤比较" class="headerlink" title="拥挤比较"></a>拥挤比较</h3><p>密度估计：对同一个前沿面的解集合按各个目标分量大小排序，计算每个解在该分量下的两侧点的距离差值，而后进行累加各个分量上的距离作为拥挤系数。两端解的拥挤系数设为∞。</p>
+<p>如果有两个目标分量（二目标优化），拥挤系数就是相邻解围成的矩形周长的1/2.</p>
+<h3 id="主循环"><a href="#主循环" class="headerlink" title="主循环"></a>主循环</h3><p>对于每个父代种群P，将其生成的子代种群Q与之合并为合并种群R，接着对新种群R利用快速非支配排序算法算法计算得到R中解得前沿排序，将R中的个体选择至新父代P中。具体选择如下：<br>对于已经排好序的个体，按前沿面顺序整体加入P中，也就是F1最先加入，然后是F2，以此类推；Fi在加入之前得做一个判断，加入Fi整个前沿面个体后，是否新父代总数量超过N，如果是，则对Fi中的个体计算拥挤度量，选择最优的个体加入，使得新父代总数量为N。</p>
+
       
     </div>
 
